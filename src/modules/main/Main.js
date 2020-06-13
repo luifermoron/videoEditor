@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../../sources/logo.svg';
+import './styles.css';
 
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
-class App extends Component {
+class Main extends Component {
 
   componentDidMount() {
 		// setting up an event listener to read data that background process
@@ -27,14 +27,14 @@ class App extends Component {
   
 	render() {
 		return (
-			<div className="App">
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
+			<div className="Main">
+				<header className="Main-header">
+					<img src={logo} className="Main-logo" alt="logo" />
 					<p>
-						Edit <code>src/App.js</code> and save to reload.
+						Edit <code>src/modules/main/Main.js</code> and save to reload.
 					</p>
 					<a
-						className="App-link"
+						className="Main-link"
 						href="https://reactjs.org"
 						target="_blank"
 						rel="noopener noreferrer"
@@ -47,4 +47,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default Main;
