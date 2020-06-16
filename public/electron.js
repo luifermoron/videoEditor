@@ -18,6 +18,8 @@ function createWindow() {
 				slashes: true,
 		  });
 	mainWindow = new BrowserWindow({
+		fullscreen: true,
+		fullscreenable: true,
 		webPreferences: {
 			nodeIntegration: true,
 		},

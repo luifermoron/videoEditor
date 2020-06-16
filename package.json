@@ -3,14 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "4.10.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "material-table": "1.61.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-player": "2.3.1",
     "react-redux": "7.2.0",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
+    "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0"
   },
   "scripts": {
@@ -40,6 +44,7 @@
   "devDependencies": {
     "concurrently": "^5.2.0",
     "electron": "^9.0.3",
+    "electron-devtools-installer": "^3.0.0",
     "python-shell": "^2.0.1",
     "redux-devtools-extension": "^2.13.8",
     "wait-on": "^5.0.1"
