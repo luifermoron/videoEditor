@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../sources/logo.svg';
 import Button from '@material-ui/core/Button';
 import Video from '../../components/video/Video';
-import Parts from '../../components/parts/Parts';
+import Parts from '../../components/videoParts/Parts';
 
 import './styles.css';
 
