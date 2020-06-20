@@ -1,5 +1,5 @@
 export default {
     path: "",
     parts: [],
-    index: 0
+    index: 1
 }

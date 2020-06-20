@@ -2,7 +2,7 @@
 export const ADD_SOURCE_VIDEO_PATH = "ADD_SOURCE_VIDEO_PATH";
 export const ADD_PART_ID = "ADD_PART_ID";
 export const REMOVE_PART_ID = "REMOVE_PART_ID";
-export const GET_NEW_INDEX = "GET_NEW_INDEX";
+export const INCREMENT_INDEX = "INCREMENT_INDEX";
 export const RESET_INDEX = "RESET_INDEX";
 export const RESET_SOURCE_VIDEO = "RESET_SOURCE_VIDEO";
 

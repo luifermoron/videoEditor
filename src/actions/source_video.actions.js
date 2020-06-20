@@ -1,4 +1,4 @@
-import { ADD_SOURCE_VIDEO_PATH, ADD_PART_ID, REMOVE_PART_ID, GET_NEW_INDEX, RESET_INDEX, RESET_SOURCE_VIDEO } from '../constants/actions';
+import { ADD_SOURCE_VIDEO_PATH, ADD_PART_ID, REMOVE_PART_ID, INCREMENT_INDEX, RESET_INDEX, RESET_SOURCE_VIDEO } from '../constants/actions';
 
 export const addSourceVideoPathAction = (path) => {
     return {
@@ -21,10 +21,9 @@ export const removePartIdAction = (id) => {
     }
 }
 
-export const getNewIndexAction = (id) => {
+export const incrementIndex = () => {
     return {
-        type: GET_NEW_INDEX,
-        id: id
+        type: INCREMENT_INDEX
     }
 }
 

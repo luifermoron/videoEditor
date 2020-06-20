@@ -6,27 +6,20 @@ import MaterialTable from "material-table";
 
 import './styles.css';
 
+import { batch } from 'react-redux';
+
+import { addPartAction } from '../../actions/parts.actions';
+import { addPartIdAction, incrementIndex } from '../../actions/source_video.actions';
+
 const timeStyle = {
   width: 100
 };
 
 const COLUMNS = [
-  { title: "Parts", field: "part" },
+  { title: "Parts", field: "id" },
   { title: "Times", field: "toString" }
 ];
 
-const mapsStateToProps = (store) => {
-  const partKeys = store.sourceVideo.parts;
-  const partsStoreArray = store.parts;
-
-  let parts = [];
-  for (let i = 0; i < partKeys.length; i++) {
-    const partObject = partsStoreArray[partKeys[i]];
-    parts = [...parts, { ...partObject, toString: partObject.init + " - " + partObject.end }];
-  }
-
-  return { parts };
-}
 
 const deletePart = (dispatch, oldPart) => {
   console.log("deletePart");
@@ -35,26 +28,37 @@ const deletePart = (dispatch, oldPart) => {
 }
 
 const useTimes = () => {
-  const [times, setTimes] = useState({init: "" , end: ""});
+  const [times, setTimes] = useState({ init: "", end: "" });
 
   const updateTimeValue = (object) => {
     const key = object.target.id;
-    setTimes({...times, [key]: object.target.value});
+    setTimes({ ...times, [key]: object.target.value });
   }
-  return { times, updateTimeValue };
+
+  const resetTimes = () => {
+    setTimes({ init: "", end: "" });
+  }
+
+  return { times, updateTimeValue, resetTimes };
 }
 
-const addPart = (dispatch, times, updateTimeValue) => {
-  console.log("addPart");
-  console.log(dispatch);
-  console.log(times);
-  console.log(updateTimeValue);
+const addPart = (dispatch, index, times, resetTimes) => {
+  const id = "p" + parseInt(index);
+
+  batch(() => {
+    dispatch(addPartAction(times, id));
+    dispatch(addPartIdAction(id));
+    dispatch(incrementIndex());
+  });
+
+  resetTimes();
 }
 
 export default function Parts() {
-  const { times, updateTimeValue } = useTimes();
+  const { times, updateTimeValue, resetTimes } = useTimes();
 
-  const { parts } = useSelector(mapsStateToProps);
+  const { parts, index } = useSelector(mapsStateToProps);
+
   const dispatch = useDispatch();
 
   return (
@@ -87,7 +91,7 @@ export default function Parts() {
                 variant="contained"
                 color="secondary"
                 size="small"
-                onClick={() => addPart(dispatch, times, updateTimeValue)}
+                onClick={() => addPart(dispatch, index, times, resetTimes)}
               >
                 Add
     		      </Button>
@@ -102,7 +106,7 @@ export default function Parts() {
                 onChange={updateTimeValue}
               />
               <p>To: </p>
-              <TextField 
+              <TextField
                 id="end"
                 label="hr:min:seg"
                 variant="outlined"
@@ -117,4 +121,18 @@ export default function Parts() {
       />
     </div>
   );
+}
+
+
+const mapsStateToProps = (store) => {
+  const partKeys = store.sourceVideo.parts;
+  const partsStoreArray = store.parts;
+
+  let parts = [];
+  for (let i = 0; i < partKeys.length; i++) {
+    const partObject = partsStoreArray[partKeys[i]];
+    if (partObject) parts = [...parts, { ...partObject, toString: partObject.init + " - " + partObject.end }];
+  }
+  const index = store.sourceVideo.index;
+  return { parts, index };
 }
