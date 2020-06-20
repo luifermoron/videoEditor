@@ -8,8 +8,8 @@ import './styles.css';
 
 import { batch } from 'react-redux';
 
-import { addPartAction } from '../../actions/parts.actions';
-import { addPartIdAction, incrementIndex } from '../../actions/source_video.actions';
+import { addPartAction, removePartAction } from '../../actions/parts.actions';
+import { addPartIdAction, incrementIndex, removePartIdAction } from '../../actions/source_video.actions';
 
 const timeStyle = {
   width: 100
@@ -21,11 +21,7 @@ const COLUMNS = [
 ];
 
 
-const deletePart = (dispatch, oldPart) => {
-  console.log("deletePart");
-  console.log(oldPart);
-  console.log(dispatch);
-}
+
 
 const useTimes = () => {
   const [times, setTimes] = useState({ init: "", end: "" });
@@ -40,6 +36,14 @@ const useTimes = () => {
   }
 
   return { times, updateTimeValue, resetTimes };
+}
+
+const deletePart = (dispatch, oldPart) => {
+  const id = oldPart.id;
+  batch(() => {
+    dispatch(removePartIdAction(id));
+    dispatch(removePartAction(id));
+  });
 }
 
 const addPart = (dispatch, index, times, resetTimes) => {
@@ -70,20 +74,15 @@ export default function Parts() {
         options={{
           search: false
         }}
-        editable={{
-          onRowDelete: (oldPart) =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-                deletePart(dispatch, oldPart);
-                /*setState((prevState) => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });*/
-              }, 600);
-            }),
-        }}
+        actions={[
+          {
+            tooltip: 'Delete',
+            icon: 'delete',
+            onClick: (evt, part) => {
+              deletePart(dispatch, part);
+            }
+          }
+        ]}
         components={{
           Toolbar: props => (
             <div className="containerAdd">

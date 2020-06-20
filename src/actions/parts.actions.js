@@ -8,9 +8,9 @@ export const addPartAction = (part, id) => {
     }
 }
 
-export const removePartAction = (part) => {
+export const removePartAction = (id) => {
     return {
         type: REMOVE_PART,
-        part: part,
+        id: id,
     }
 }
