@@ -28,12 +28,6 @@ const mapsStateToProps = (store) => {
   return { parts };
 }
 
-const addPart = (dispatch) => {
-  console.log("addPart");
-
-  console.log(dispatch);
-}
-
 const deletePart = (dispatch, oldPart) => {
   console.log("deletePart");
   console.log(oldPart);
@@ -50,6 +44,12 @@ const useTimes = () => {
   return { times, updateTimeValue };
 }
 
+const addPart = (dispatch, times, updateTimeValue) => {
+  console.log("addPart");
+  console.log(dispatch);
+  console.log(times);
+  console.log(updateTimeValue);
+}
 
 export default function Parts() {
   const { times, updateTimeValue } = useTimes();
@@ -87,6 +87,7 @@ export default function Parts() {
                 variant="contained"
                 color="secondary"
                 size="small"
+                onClick={() => addPart(dispatch, times, updateTimeValue)}
               >
                 Add
     		      </Button>

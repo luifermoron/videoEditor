@@ -29,6 +29,10 @@ const suscribeListeners = () => {
 	});
 }
 
+const joinAndSave = () => {
+	console.log("joinAndSave");
+}
+
 const Main = () => {
 	useEffect(suscribeListeners, []);
 
@@ -52,6 +56,7 @@ const Main = () => {
 					<Button
 						variant="contained"
 						color="primary"
+						onClick={joinAndSave}
 					>
 						JOIN AND SAVE
     				</Button>
