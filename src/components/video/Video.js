@@ -10,20 +10,25 @@ const WIDTH = 320;
 
 
 const Video = ({ title }) => {
+	const [videoFilePath, setVideoFileURL] = useState(null);
+
 	return (
 		<div className="containerVideo">
 			<h2>{title}</h2>
-			<ReactPlayer
-				height={HEIGHT}
-				width={WIDTH}
-				url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
-			<Button 
-				variant="contained" 
-				color="inherit"
-				width={12}
-				>
-				Select
-    		</Button>
+			{
+				videoFilePath &&
+				(
+					<ReactPlayer
+						url={videoFilePath}
+						height={HEIGHT}
+						width={WIDTH}
+						controls={true} />
+				)
+			}
+			<input type="file" name="img" accept="video/*"
+				onChange={e => {
+					setVideoFileURL(URL.createObjectURL(e.target.files[0]));
+				}} />
 		</div>
 	);
 }

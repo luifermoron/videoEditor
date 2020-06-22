@@ -11,12 +11,14 @@ import { batch } from 'react-redux';
 import { addPartAction, removePartAction } from '../../actions/parts.actions';
 import { addPartIdAction, incrementIndex, removePartIdAction } from '../../actions/source_video.actions';
 
+import { KEY_PARTS } from '../../constants/key';
+
 const timeStyle = {
   width: 100
 };
 
 const COLUMNS = [
-  { title: "Parts", field: "id" },
+  { title: "Parts/Transitions", field: "id" },
   { title: "Times", field: "toString" }
 ];
 
@@ -47,7 +49,7 @@ const deletePart = (dispatch, oldPart) => {
 }
 
 const addPart = (dispatch, index, times, resetTimes) => {
-  const id = "p" + parseInt(index);
+  const id = KEY_PARTS + parseInt(index);
 
   batch(() => {
     dispatch(addPartAction(times, id));

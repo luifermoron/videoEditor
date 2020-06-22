@@ -34,6 +34,7 @@ const joinAndSave = () => {
 }
 
 const Main = () => {
+	const [progress, useProgress] = useState(0);
 	useEffect(suscribeListeners, []);
 
 	return (
@@ -47,12 +48,17 @@ const Main = () => {
 				/>
 			</div>
 
-			<div className="row">
-				<div className="component">
-					<Parts></Parts>
+			<div className="column">
+				<div className="partsContainer">
+					<Parts/>
 				</div>
-				<div className="component">
-					<h2>Processing: 98%</h2>
+				<div className="row">
+					{
+						progress > 0 && 
+						(
+							<h2>Processing: 98%</h2>
+						) 
+					}
 					<Button
 						variant="contained"
 						color="primary"

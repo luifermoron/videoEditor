@@ -11,14 +11,24 @@
 
 .row {
   display: flex;
-  height: 40vh;
-  width: 100vh;
+  flex: 1;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
 }
 
-.component {
+.column {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+.partsContainer {
   flex: 1;
+  width: 96vh;
+  border-radius: 25px;
+  background: bisque;
+  padding: 20px; 
 }
 
