@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Video from '../../components/video/Video';
 import TransitionsVideo from '../../components/TransitionsVideo/TransitionsVideo';
@@ -20,18 +20,21 @@ const messageFromBackgroundViaMain = (event, args) => {
 const suscribeListeners = () => {
 
 	ipcRenderer.on('MESSAGE_FROM_BACKGROUND_VIA_MAIN', messageFromBackgroundViaMain);
-
-	// trigger event to start background process
-	// can be triggered pretty much from anywhere after
-	// you have set up a listener to get the information
-	// back from background process, as I have done in line 13
-	ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
-		number: 25,
-	});
 }
 
-const joinAndSave = () => {
-	console.log("joinAndSave");
+const callBackgroundTask = () => {
+	return (dispatch, state) => {
+		console.log("hofsdfasdfsafdadsfadfasdfsadafsdafafdsa");
+		console.log(state());
+		ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
+			number: 25,
+		});
+		return Promise.resolve()
+	}
+}
+
+const joinAndSave = (dispatch) => {
+	dispatch(callBackgroundTask())
 }
 
 const Main = () => {
@@ -39,7 +42,7 @@ const Main = () => {
 	useEffect(suscribeListeners, []);
 
 	const { path } = useSelector(mapsStateToProps);
-
+	const dispatch = useDispatch();
 	return (
 		<div className="container">
 			<div className="row">
@@ -70,7 +73,7 @@ const Main = () => {
 						variant="contained"
 						color="primary"
 						style={{ marginTop: 8 }}
-						onClick={joinAndSave}
+						onClick={() => joinAndSave(dispatch)}
 					>
 						JOIN AND SAVE
     				</Button>
