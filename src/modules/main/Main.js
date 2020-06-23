@@ -3,7 +3,7 @@ import logo from '../../sources/logo.svg';
 import Button from '@material-ui/core/Button';
 import Video from '../../components/video/Video';
 import TransitionsVideo from '../../components/transitionsVideo/TransitionsVideo';
-import Parts from '../../components/videoParts/Parts';
+import ResultVideo from '../../components/ResultVideo/ResultVideo';
 
 import './styles.css';
 
@@ -50,7 +50,7 @@ const Main = () => {
 
 			<div className="column">
 				<div className="partsContainer">
-					<Parts/>
+					<ResultVideo/>
 				</div>
 				<div className="row">
 					{

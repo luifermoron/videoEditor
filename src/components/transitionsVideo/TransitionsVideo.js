@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import MaterialTable from "material-table";
 
 import './styles.css';
 
 import { batch } from 'react-redux';
 
-import { addPartAction, removePartAction } from '../../actions/parts.actions';
-import { addPartIdAction, incrementIndex, removePartIdAction } from '../../actions/source_video.actions';
-
-import { KEY_PARTS } from '../../constants/key';
+import { incrementIndexTransitions } from '../../actions/result_video.actions';
 
 const timeStyle = {
   width: 100
@@ -22,47 +17,16 @@ const COLUMNS = [
   { title: "Path", field: "path" },
 ];
 
-
-
-
-const useTimes = () => {
-  const [times, setTimes] = useState({ init: "", end: "" });
-
-  const updateTimeValue = (object) => {
-    const key = object.target.id;
-    setTimes({ ...times, [key]: object.target.value });
-  }
-
-  const resetTimes = () => {
-    setTimes({ init: "", end: "" });
-  }
-
-  return { times, updateTimeValue, resetTimes };
-}
-
 const deletePart = (dispatch, oldPart) => {
   const id = oldPart.id;
   batch(() => {
-    dispatch(removePartIdAction(id));
-    dispatch(removePartAction(id));
+
   });
 }
 
-const addPart = (dispatch, index, times, resetTimes) => {
-  const id = KEY_PARTS + parseInt(index);
 
-  batch(() => {
-    dispatch(addPartAction(times, id));
-    dispatch(addPartIdAction(id));
-    dispatch(incrementIndex());
-  });
-
-  resetTimes();
-}
 
 export default function TransitionsVideo() {
-  const { times, updateTimeValue, resetTimes } = useTimes();
-
   const { transitionsVideo, index } = useSelector(mapsStateToProps);
 
   const dispatch = useDispatch();
@@ -90,14 +54,10 @@ export default function TransitionsVideo() {
         components={{
           Toolbar: props => (
             <div className="containerAddTransitions">
-              <Button
-                variant="contained"
-                color="default"
-                size="small"
-                onClick={() => addPart(dispatch, index, times, resetTimes)}
-              >
-                Add
-    		      </Button>
+              <input type="file" name="img" accept="video/*"
+                onChange={e => {
+                  console.log(URL.createObjectURL(e.target.files[0]));
+                }} />
             </div>
           ),
         }}
@@ -116,6 +76,6 @@ const mapsStateToProps = (store) => {
     const partObject = partsStoreArray[partKeys[i]];
     if (partObject) parts = [...parts, { ...partObject, toString: partObject.init + " - " + partObject.end }];
   }
-  const index = store.sourceVideo.index;
+  const index = store.resultVideo.indexTransitions;
   return { parts, index };
 }

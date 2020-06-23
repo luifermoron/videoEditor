@@ -9,9 +9,12 @@ import './styles.css';
 import { batch } from 'react-redux';
 
 import { addPartAction, removePartAction } from '../../actions/parts.actions';
-import { addPartIdAction, incrementIndex, removePartIdAction } from '../../actions/source_video.actions';
+import { addResultIdAction, removeResultIdAction } from '../../actions/result_video.actions';
 
-import { KEY_PARTS } from '../../constants/key';
+import { incrementIndexParts } from '../../actions/result_video.actions';
+
+import { KEY_PARTS, KEY_TRANSITIONS } from '../../constants/key';
+import { LABEL_INDEX_PARTS, LABEL_INDEX_TRANSITIONS } from '../../constants/key';
 
 const timeStyle = {
   width: 100
@@ -21,9 +24,6 @@ const COLUMNS = [
   { title: "Parts/Transitions", field: "id" },
   { title: "Times", field: "toString" }
 ];
-
-
-
 
 const useTimes = () => {
   const [times, setTimes] = useState({ init: "", end: "" });
@@ -40,39 +40,48 @@ const useTimes = () => {
   return { times, updateTimeValue, resetTimes };
 }
 
-const deletePart = (dispatch, oldPart) => {
-  const id = oldPart.id;
+const addPart = (dispatch, indexParts, times, resetTimes) => {
+  const id = KEY_PARTS + parseInt(indexParts);
   batch(() => {
-    dispatch(removePartIdAction(id));
-    dispatch(removePartAction(id));
-  });
-}
-
-const addPart = (dispatch, index, times, resetTimes) => {
-  const id = KEY_PARTS + parseInt(index);
-
-  batch(() => {
-    dispatch(addPartAction(times, id));
-    dispatch(addPartIdAction(id));
-    dispatch(incrementIndex());
+    dispatch(addPartAction({...times,
+                            toString: times.init + " - " + times.end
+                           }, 
+                           id));
+    dispatch(addResultIdAction(id));
+    dispatch(incrementIndexParts());
   });
 
   resetTimes();
 }
 
-export default function Parts() {
+const deletePart = (dispatch, oldPart) => {
+  const id = oldPart.id;
+  batch(() => {
+    dispatch(removeResultIdAction(id));
+    dispatch(removePartAction(id));
+  });
+}
+
+const deleteTransition = (dispatch, oldPart) => {
+  const id = oldPart.id;
+  batch(() => {
+    dispatch(removeResultIdAction(id));
+  });
+}
+
+export default function ResultVideo() {
   const { times, updateTimeValue, resetTimes } = useTimes();
 
-  const { parts, index } = useSelector(mapsStateToProps);
+  const { result, indexParts } = useSelector(mapsStateToProps);
 
   const dispatch = useDispatch();
 
   return (
     <div style={{ maxWidth: "100%" }}>
       <MaterialTable
-        title="Parts of video"
+        title="Result Video"
         columns={COLUMNS}
-        data={parts}
+        data={result}
         options={{
           search: false
         }}
@@ -80,8 +89,13 @@ export default function Parts() {
           {
             tooltip: 'Delete',
             icon: 'delete',
-            onClick: (evt, part) => {
-              deletePart(dispatch, part);
+            onClick: (evt, resultObj) => {
+              const id = resultObj.id;
+              if (id.includes(KEY_PARTS)) {
+                deletePart(dispatch, resultObj);
+              } else if (id.includes(KEY_TRANSITIONS)) {
+                deleteTransition(dispatch, resultObj);
+              }
             }
           }
         ]}
@@ -92,7 +106,7 @@ export default function Parts() {
                 variant="contained"
                 color="secondary"
                 size="small"
-                onClick={() => addPart(dispatch, index, times, resetTimes)}
+                onClick={() => addPart(dispatch, indexParts, times, resetTimes)}
               >
                 Add
     		      </Button>
@@ -126,14 +140,19 @@ export default function Parts() {
 
 
 const mapsStateToProps = (store) => {
-  const partKeys = store.sourceVideo.parts;
-  const partsStoreArray = store.parts;
+  const resultKeys = store.resultVideo.result;
+  const resultStoreAll = { ...store.parts, ...store.transitionsVideo };
 
-  let parts = [];
-  for (let i = 0; i < partKeys.length; i++) {
-    const partObject = partsStoreArray[partKeys[i]];
-    if (partObject) parts = [...parts, { ...partObject, toString: partObject.init + " - " + partObject.end }];
+  let result = [];
+  for (let i = 0; i < resultKeys.length; i++) {
+    const objectResult = resultStoreAll[resultKeys[i]];
+    if (objectResult) result = [...result, { ...objectResult, toString: objectResult.toString }];
   }
-  const index = store.sourceVideo.index;
-  return { parts, index };
+
+  const indexParts = store.resultVideo[LABEL_INDEX_PARTS];
+  const indexTransitions = store.resultVideo[LABEL_INDEX_TRANSITIONS];
+  return { result: result, 
+           [LABEL_INDEX_PARTS]: indexParts, 
+           [LABEL_INDEX_TRANSITIONS]: indexTransitions 
+         };
 }
