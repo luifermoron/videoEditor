@@ -11,9 +11,9 @@
 
 .row {
   display: flex;
-  flex: 1;
-  justify-content: space-evenly;
-  align-items: center;
+  width: 100vh;
+  align-items: flex-start;
+  justify-content: center;
   flex-direction: row;
 }
 

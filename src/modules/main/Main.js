@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../sources/logo.svg';
 import Button from '@material-ui/core/Button';
 import Video from '../../components/video/Video';
+import TransitionsVideo from '../../components/transitionsVideo/TransitionsVideo';
 import Parts from '../../components/videoParts/Parts';
 
 import './styles.css';
@@ -43,8 +44,7 @@ const Main = () => {
 				<Video
 					title={"Original Video"}
 				/>
-				<Video
-					title={"Transition Video"}
+				<TransitionsVideo
 				/>
 			</div>
 
@@ -62,6 +62,7 @@ const Main = () => {
 					<Button
 						variant="contained"
 						color="primary"
+						style={{marginTop: 8}}
 						onClick={joinAndSave}
 					>
 						JOIN AND SAVE

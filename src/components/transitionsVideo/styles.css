@@ -1,0 +1,7 @@
+.containerAddTransitions {
+    display: flex;
+    flex-direction: row;
+    padding-top: 6px;
+    padding-left: 16px;
+    justify-content: flex-start;
+}
