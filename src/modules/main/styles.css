@@ -2,7 +2,7 @@
   padding: 0.2cm;
   text-align: center;
   display: flex;
-  height: 100vh;
+  max-height: 100vh;
   width: 100vh;
   background-color: white;
   flex-direction: column;

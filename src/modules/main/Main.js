@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logo from '../../sources/logo.svg';
+import { useSelector } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Video from '../../components/video/Video';
 import TransitionsVideo from '../../components/TransitionsVideo/TransitionsVideo';
@@ -38,6 +38,8 @@ const Main = () => {
 	const [progress, useProgress] = useState(0);
 	useEffect(suscribeListeners, []);
 
+	const { path } = useSelector(mapsStateToProps);
+
 	return (
 		<div className="container">
 			<div className="row">
@@ -49,20 +51,25 @@ const Main = () => {
 			</div>
 
 			<div className="column">
-				<div className="partsContainer">
-					<ResultVideo/>
-				</div>
+				{
+					path &&
+					(
+						<div className="partsContainer">
+							<ResultVideo />
+						</div>
+					)
+				}
 				<div className="row">
 					{
-						progress > 0 && 
+						progress > 0 &&
 						(
 							<h2>Processing: 98%</h2>
-						) 
+						)
 					}
 					<Button
 						variant="contained"
 						color="primary"
-						style={{marginTop: 8}}
+						style={{ marginTop: 8 }}
 						onClick={joinAndSave}
 					>
 						JOIN AND SAVE
@@ -71,6 +78,11 @@ const Main = () => {
 			</div>
 		</div>
 	);
+}
+
+const mapsStateToProps = (store) => {
+	const path = store.sourceVideo.path;
+	return { path };
 }
 
 export default Main;
