@@ -9,7 +9,9 @@ export const ADD_PART = "ADD_PART";
 export const REMOVE_PART = "REMOVE_PART";
 
 //Transition Video
-export const UPDATE_TRANSITION_VIDEO_PATH = "UPDATE_TRANSITION_VIDEO_PATH";
+export const ADD_TRANSITION = "ADD_TRANSITION";
+export const REMOVE_TRANSITION = "REMOVE_TRANSITION";
+
 
 //Result Video
 export const UPDATE_RESULT_VIDEO_PATH = "UPDATE_RESULT_VIDEO_PATH";

@@ -20,7 +20,11 @@ export default function (state = initialState, action) {
     case REMOVE_RESULT_ID:
       return {
         ...state,
-        result: state.result.filter((part, _) => part.id !== action.id)
+        result: state.result.filter((result, position) => {
+          const different = result.id !== action.id;
+          return (action.resultPosition) ? (position !== action.resultPosition && different)
+                                           : different;
+        })
       };
     default:
       return state;

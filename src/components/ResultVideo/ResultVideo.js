@@ -12,6 +12,7 @@ import { addPartAction, removePartAction } from '../../actions/parts.actions';
 import { addResultIdAction, removeResultIdAction } from '../../actions/result_video.actions';
 
 import { incrementIndexParts } from '../../actions/result_video.actions';
+import { deleteTransition } from '../../components/TransitionsVideo/TransitionsVideo';
 
 import { KEY_PARTS, KEY_TRANSITIONS } from '../../constants/key';
 import { LABEL_INDEX_PARTS, LABEL_INDEX_TRANSITIONS } from '../../constants/key';
@@ -62,13 +63,6 @@ const deletePart = (dispatch, oldPart) => {
   });
 }
 
-const deleteTransition = (dispatch, oldPart) => {
-  const id = oldPart.id;
-  batch(() => {
-    dispatch(removeResultIdAction(id));
-  });
-}
-
 export default function ResultVideo() {
   const { times, updateTimeValue, resetTimes } = useTimes();
 
@@ -94,7 +88,7 @@ export default function ResultVideo() {
               if (id.includes(KEY_PARTS)) {
                 deletePart(dispatch, resultObj);
               } else if (id.includes(KEY_TRANSITIONS)) {
-                deleteTransition(dispatch, resultObj);
+                deleteTransition(dispatch, resultObj, resultObj.tableData.id);
               }
             }
           }

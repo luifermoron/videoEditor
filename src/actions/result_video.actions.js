@@ -10,10 +10,11 @@ export const addResultIdAction = (id) => {
     }
 }
 
-export const removeResultIdAction = (id) => {
+export const removeResultIdAction = (id, resultPosition) => {
     return {
         type: REMOVE_RESULT_ID,
-        id: id
+        id: id,
+        resultPosition: resultPosition
     }
 }
 

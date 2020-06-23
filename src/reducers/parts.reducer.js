@@ -1,7 +1,7 @@
 import initialState from '../states/parts.state';
 import { ADD_PART, REMOVE_PART } from '../constants/actions';
 
-export default function (state = {}, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case ADD_PART:
       const addPart = action.id;
