@@ -1,9 +1,10 @@
 import { ADD_SOURCE_VIDEO_PATH, RESET_INDEX, RESET_SOURCE_VIDEO } from '../constants/actions';
 
-export const addSourceVideoPathAction = (path) => {
+export const addSourceVideoPathAction = (path, videoInformation) => {
     return {
         type: ADD_SOURCE_VIDEO_PATH,
         path: path,
+        videoInformation: videoInformation
     }
 }
 

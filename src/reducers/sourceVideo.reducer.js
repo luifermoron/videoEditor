@@ -7,7 +7,8 @@ export default function (state = initialState, action) {
     case ADD_SOURCE_VIDEO_PATH:
       return {
         ...state,
-        path: action.path
+        path: action.path,
+        videoInformation: action.videoInformation
       };
     default:
       return state;

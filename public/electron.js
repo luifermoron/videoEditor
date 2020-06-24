@@ -81,7 +81,7 @@ ipcMain.on('START_BACKGROUND_VIA_MAIN', (event, args) => {
 		hiddenWindow = null;
 	});
 
-	cache.data = args.number;
+	cache.data = args.state;
 });
 
 // This event listener will listen for data being sent back

@@ -22,11 +22,17 @@ const suscribeListeners = () => {
 	ipcRenderer.on('MESSAGE_FROM_BACKGROUND_VIA_MAIN', messageFromBackgroundViaMain);
 }
 
+const callBackgroundTask = () => {
+	return (dispatch, state) => {
+		ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
+			state: JSON.stringify(state())
+		});
+		return Promise.resolve()
+	}
+}
 
 const joinAndSave = (dispatch) => {
-	ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
-		number: 25,
-	});
+	dispatch(callBackgroundTask());
 }
 
 const Main = () => {

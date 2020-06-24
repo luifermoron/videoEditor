@@ -20,11 +20,12 @@ const COLUMNS = [
   { title: "Path", field: "toString" },
 ];
 
-const addTransition = (dispatch, path, indexTransitions) => {
+const addTransition = (dispatch, path, videoInformation, indexTransitions) => {
   const id = KEY_TRANSITIONS + parseInt(indexTransitions);
   batch(() => {
     dispatch(addTransitionAction({
       path: path,
+      videoInformation: videoInformation,
       toString: "video length"
     },
       id));
@@ -81,6 +82,7 @@ export default function TransitionsVideo() {
                 onChange={e => {
                   addTransition(dispatch,
                     URL.createObjectURL(e.target.files[0]),
+                    e.target.files[0],
                     indexTransitions
                   );
                 }} />

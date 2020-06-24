@@ -26,7 +26,9 @@ export default function Video ({ title }) {
 			<input type="file" name="img" accept="video/*"
 				onChange={e => {
 					dispatch(
-						addSourceVideoPathAction(URL.createObjectURL(e.target.files[0]))
+						addSourceVideoPathAction(URL.createObjectURL(e.target.files[0]),
+												 e.target.files[0]
+												)
 					);
 				}} />
 		</div>
