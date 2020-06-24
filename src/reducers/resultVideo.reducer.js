@@ -57,8 +57,9 @@ export default function (state = initialState, action) {
         ...state,
         result: state.result.filter((result, position) => {
           const different = result.id !== action.id;
-          return (action.resultPosition) ? (position !== action.resultPosition && different)
-            : different;
+          return (action.resultPosition !== null) ? 
+                 (position !== action.resultPosition && different) : 
+                 (different);
         })
       };
     default:

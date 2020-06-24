@@ -32,12 +32,14 @@ const addTransition = (dispatch, path, indexTransitions) => {
   });
 }
 
-export const deleteTransition = (dispatch, transition, resultPosition = undefined) => {
+export const deleteTransition = (dispatch, transition, resultPosition = null) => {
   const id = transition.id;
   batch(() => {
     dispatch(removeResultIdAction(id, resultPosition));
-    if (!resultPosition)
+    if (resultPosition === null){
       dispatch(removeTransitionAction(id));
+    }
+      
   });
 }
 
