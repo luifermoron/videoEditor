@@ -6,7 +6,7 @@
 
 	ipcRenderer.on('START_PROCESSING', (event, args) => {
 		const { data } = args;
-		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/factorial.py'), {
+		let pyshell = new PythonShell(path.join(__dirname, '../scripts/main.py'), {
 			pythonPath: 'python3',
 			args: [data]
 		});
