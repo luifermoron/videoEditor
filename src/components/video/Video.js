@@ -27,7 +27,7 @@ export default function Video ({ title }) {
 				onChange={e => {
 					dispatch(
 						addSourceVideoPathAction(URL.createObjectURL(e.target.files[0]),
-												 e.target.files[0]
+												 e.target.files[0].path
 												)
 					);
 				}} />

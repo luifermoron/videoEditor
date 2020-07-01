@@ -26,7 +26,7 @@ const addTransition = (dispatch, path, videoInformation, indexTransitions) => {
     dispatch(addTransitionAction({
       path: path,
       videoInformation: videoInformation,
-      toString: "video length"
+      toString: videoInformation.name
     },
       id));
     dispatch(incrementIndexTransitions());
@@ -82,7 +82,7 @@ export default function TransitionsVideo() {
                 onChange={e => {
                   addTransition(dispatch,
                     URL.createObjectURL(e.target.files[0]),
-                    e.target.files[0],
+                    e.target.files[0].path,
                     indexTransitions
                   );
                 }} />
